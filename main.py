@@ -78,12 +78,12 @@ def push_model_to_roboprop(model_name):
     return response
 
 
-def push_metadata_to_roboprop(metadata, model_name):
+def push_metadata_to_roboprop(metadata_path, model_name):
     # Get index.json
     index = check_and_get_index()
     url_safe_name = urllib.parse.quote(model_name)
     # convert the metadata as json to a dictionary
-    with open('metadata.json', 'r') as f:
+    with open(metadata_path, 'r') as f:
         metadata = json.load(f)
     metadata["source"] = "Upload"
     metadata["scale"] = 1.0
