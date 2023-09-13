@@ -6,6 +6,7 @@ import shutil
 import dotenv
 import json
 import urllib
+from pathlib import Path
 
 from load_blenderkit import convert_blender_model
 
@@ -98,6 +99,14 @@ def push_metadata_to_roboprop(metadata_path, model_name):
 
 
 def main(args):
+    # If name is not set, use the filename of the mode  l
+    if args.name is None:
+        args.name = Path(args.model).stem
+    
+    # If the metadata is not set, try to use metadata.json in the same folder as the model
+    if args.metadata is None:
+        args.metadata = str(Path(args.model).parent / "metadata.json")
+
     convert_blender_model(args.model, args.name)
     response = push_model_to_roboprop(args.name)
     print(response)
@@ -131,13 +140,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "--name",
         type=str,
-        help="The name of the model. Needs to be Unique",
+        help="The name of the model. Needs to be Unique. Defaults to the filename of the model without the extension.",
     )
 
     parser.add_argument(
         "--metadata",
         type=str,
-        help="The file location of the metadata",
+        help="The file location of the metadata. Defaults to metadata.json in the same folder as the model.",
     )
 
     args = parser.parse_args()
