@@ -3,3 +3,4 @@ textures/
 __pycache__/
 .env
 venv/
+metadata.json
