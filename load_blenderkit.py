@@ -40,13 +40,13 @@ def load_asset_meta(asset_base_id: str):
     return data["results"][0]
 
 
-def add_demo_world(model_path: Path):
+def add_demo_world(model_name: str):
     with open("demo.sdf.template", "r") as template_file:
         template = template_file.read()
 
-    output_text = template.replace("{{model_path}}", str(model_path))
+    output_text = template.replace("{{model_path}}", model_name + "/model.sdf")
 
-    demo_path = model_path / "demo.sdf"
+    demo_path = "models/demo.sdf"
     with open(demo_path, "w") as f:
         f.write(output_text)
 
@@ -62,7 +62,7 @@ def convert_blender_model(model: str, model_name: str = None):
 
     # Save metadata to index.json TODO
 
-    demo_path = add_demo_world(model_path)
+    demo_path = add_demo_world(model_name)
 
 
 def main(args):
