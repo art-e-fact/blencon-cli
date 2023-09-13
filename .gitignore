@@ -1,3 +1,5 @@
 models/
 textures/
 __pycache__/
+.env
+venv/
